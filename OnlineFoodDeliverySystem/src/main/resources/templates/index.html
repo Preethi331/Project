@@ -1,10 +1,153 @@
 <!DOCTYPE html>
-<html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | Your Company Name</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            align-items: center;
+            padding-top: 60px; /* Adjust for fixed top content */
+        }
+        .top-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: #343a40;
+            color: white;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between; /* Distribute space between items */
+            align-items: center;
+            z-index: 1000;
+        }
+        .logo-name-container {
+            display: flex;
+            align-items: center;
+        }
+        .logo {
+            max-height: 40px; /* Adjust as needed */
+            margin-right: 15px;
+        }
+        .register-button-container {
+            /* No specific styles needed for basic alignment */
+        }
+        .login-wrapper {
+            margin-top: 80px; /* Adjust to create space below the top bar */
+            width: 90%;
+            max-width: 800px; /* Increased max-width to accommodate side-by-side boxes */
+            display: flex;
+            justify-content: space-around; /* Space out the login containers horizontally */
+            align-items: flex-start; /* Align items to the top */
+        }
+        .login-container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 45%; /* Adjust width for side-by-side layout with spacing */
+            text-align: center;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .login-container:hover {
+            background-color: #e9ecef;
+        }
+        .login-details {
+            display: none; /* Initially hide login details */
+            margin-top: 15px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .btn-login {
+            width: 100%;
+        }
+        .hover-message {
+            color: #6c757d;
+            font-size: 0.9em;
+            margin-top: 5px;
+        }
+    </style>
 </head>
 <body>
+    <div class="top-bar">
+        <div class="logo-name-container">
+            <img src="your-logo.png" alt="Company Logo" class="logo">
+            <h1>Your Company Name</h1>
+        </div>
+        <div class="register-button-container">
+            <a th:href="@{/register}" class="btn btn-success">Register</a>
+        </div>
+    </div>
 
+    <div class="login-wrapper">
+        <div class="login-container" onclick="showLogin('customer')">
+            <strong>Customer Login</strong>
+            <p class="hover-message">Login as customer to order foods</p>
+            <div class="login-details" id="customer-login-details">
+                <form th:action="@{/login}" method="post">
+                    <input type="hidden" name="userType" value="customer"/>
+                    <div class="form-group">
+                        <label for="customer-id">Login ID:</label>
+                        <input type="text" class="form-control" id="customer-id" name="username" placeholder="Enter your ID">
+                    </div>
+                    <div class="form-group">
+                        <label for="customer-password">Password:</label>
+                        <input type="password" class="form-control" id="customer-password" name="password" placeholder="Enter your password">
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-login">Login as Customer</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="login-container" onclick="showLogin('owner')">
+            <strong>Owner Login</strong>
+            <p class="hover-message">Login as owner to receive orders</p>
+            <div class="login-details" id="owner-login-details">
+                <form th:action="@{/login}" method="post">
+                    <input type="hidden" name="userType" value="owner"/>
+                    <div class="form-group">
+                        <label for="owner-id">Login ID:</label>
+                        <input type="text" class="form-control" id="owner-id" name="username" placeholder="Enter your ID">
+                    </div>
+                    <div class="form-group">
+                        <label for="owner-password">Password:</label>
+                        <input type="password" class="form-control" id="owner-password" name="password" placeholder="Enter your password">
+                    </div>
+                    <button type="submit" class="btn btn-secondary btn-login">Login as Owner</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showLogin(userType) {
+            const customerDetails = document.getElementById('customer-login-details');
+            const ownerDetails = document.getElementById('owner-login-details');
+
+            if (userType === 'customer') {
+                customerDetails.style.display = 'block';
+                ownerDetails.style.display = 'none';
+            } else if (userType === 'owner') {
+                customerDetails.style.display = 'none';
+                ownerDetails.style.display = 'block';
+            }
+        }
+    </script>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
