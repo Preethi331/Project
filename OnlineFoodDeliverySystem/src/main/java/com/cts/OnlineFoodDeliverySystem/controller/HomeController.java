@@ -25,9 +25,9 @@ public class HomeController {
         return "admin/login";
     }
     
-    @GetMapping("/admin/login")
+    @GetMapping("/admin/register")
     public String showAdminRegistration()
     {
-        return "admin/login";
+        return "admin/register";
     }
 }
