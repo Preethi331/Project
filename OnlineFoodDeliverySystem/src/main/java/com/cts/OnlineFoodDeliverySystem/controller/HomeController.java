@@ -14,7 +14,7 @@ public class HomeController {
         return "customer/register";
     }
     
-    @GetMapping("/customer/register")
+    @GetMapping("/customer/login")
     public String showCustomerLogin() {
         return "customer/login";
     }
@@ -28,6 +28,6 @@ public class HomeController {
     @GetMapping("/admin/login")
     public String showAdminRegistration()
     {
-        return "admin/register";
+        return "admin/login";
     }
 }
