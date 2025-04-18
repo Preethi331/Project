@@ -30,7 +30,7 @@ public class CustomerController {
 	        }
 	        customerService.registerCustomer(customer);
 	        model.addAttribute("success", "Registration successful! You can now log in.");
-	        return "customer/register"; // Or redirect to login page
+	        return "customer/login"; // Or changed here
 	    }
 
 	    @GetMapping("/customer/login")
