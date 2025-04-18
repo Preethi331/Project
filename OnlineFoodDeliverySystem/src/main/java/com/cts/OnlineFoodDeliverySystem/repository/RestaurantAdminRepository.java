@@ -12,3 +12,4 @@ public interface RestaurantAdminRepository extends JpaRepository<RestaurantAdmin
     Optional<RestaurantAdmin> findByEmail(String email);
 
 }
+

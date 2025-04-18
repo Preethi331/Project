@@ -2,6 +2,8 @@ package com.cts.OnlineFoodDeliverySystem.model;
 import org.springframework.stereotype.Component;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.NoArgsConstructor;
@@ -12,6 +14,7 @@ import lombok.NoArgsConstructor;
 public class Customer {
 	@Id
 	@Column(name="customerid",length=10)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int customerid;
 	
 	@Column(name="cname",length=50,nullable = false)
@@ -26,7 +29,7 @@ public class Customer {
 	@Column(name="phone",length=10)
 	private int phone;
 	
-	@Column(name="address",length=10)
+	@Column(name="address",length=255)
 	private String address;
 
 	public int getCustomerid() {
