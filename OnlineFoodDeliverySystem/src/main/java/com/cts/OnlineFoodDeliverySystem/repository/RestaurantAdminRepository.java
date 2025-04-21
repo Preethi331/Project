@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import com.cts.OnlineFoodDeliverySystem.model.RestaurantAdmin;
 @Repository
-public interface RestaurantAdminRepository extends JpaRepository<RestaurantAdmin, Long>{
+public interface RestaurantAdminRepository extends JpaRepository<RestaurantAdmin, Integer>{
 
     Optional<RestaurantAdmin> findByEmail(String email);
 

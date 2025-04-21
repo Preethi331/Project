@@ -52,41 +52,58 @@ public class SecurityConfig {
     }
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain customerFilterChain(HttpSecurity http) throws Exception {
         http
-                .authorizeHttpRequests((requests) -> requests
-                        .requestMatchers("/", "/images/**", "/webjars/**", "/css/**", "/js/**", "/customer/register", "/admin/register").permitAll()
-                        .requestMatchers("/customer/**").hasAuthority("CUSTOMER")
-                        .requestMatchers("/admin/**").hasAuthority("ADMIN")
-                        .anyRequest().authenticated()
-                )
-                .formLogin((form) -> form
-                        .loginPage("/customer/login")
-                        .loginProcessingUrl("/customer/login")
-                        .defaultSuccessUrl("/customer/dashboard")
-                        .usernameParameter("email")
-                        .passwordParameter("password")
-                        .failureUrl("/customer/login?error")
-                        .permitAll()
-                )
-                .formLogin((form) -> form
-                        .loginPage("/admin/login")
-                        .loginProcessingUrl("/admin/login")
-                        .defaultSuccessUrl("/admin/dashboard")
-                        .usernameParameter("email")
-                        .passwordParameter("password")
-                        .failureUrl("/admin/login?error")
-                        .permitAll()
-                )
-                .logout((logout) -> logout
-                        .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                        .logoutSuccessUrl("/")
-                        .permitAll()
-                        .deleteCookies("JSESSIONID")
-                )
-                .authenticationProvider(customerAuthProvider())
-                .authenticationProvider(adminAuthProvider());
+            .securityMatcher("/customer/**", "/") // Apply this chain to /customer/** and potentially root
+            .authorizeHttpRequests((requests) -> requests
+                .requestMatchers("/", "/images/**", "/webjars/**", "/css/**", "/js/**", "/customer/register").permitAll()
+                .requestMatchers("/customer/**").hasAuthority("CUSTOMER")
+                .anyRequest().authenticated()
+            )
+            .formLogin((form) -> form
+                .loginPage("/customer/login")
+                .loginProcessingUrl("/customer/login")
+                .defaultSuccessUrl("/customer/dashboard")
+                .usernameParameter("email")
+                .passwordParameter("password")
+                .failureUrl("/customer/login?error")
+                .permitAll()
+            )
+            .logout((logout) -> logout
+                .logoutRequestMatcher(new AntPathRequestMatcher("/logout")) // Consider a specific logout for customers if needed
+                .logoutSuccessUrl("/")
+                .permitAll()
+                .deleteCookies("JSESSIONID")
+            )
+            .authenticationProvider(customerAuthProvider());
+        return http.build();
+    }
 
+    @Bean
+    public SecurityFilterChain adminFilterChain(HttpSecurity http) throws Exception {
+        http
+            .securityMatcher("/admin/**")
+            .authorizeHttpRequests((requests) -> requests
+                .requestMatchers("/admin/register", "/images/**", "/webjars/**", "/css/**", "/js/**").permitAll() // Add any public admin resources
+                .requestMatchers("/admin/**").hasAuthority("ADMIN")
+                .anyRequest().authenticated()
+            )
+            .formLogin((form) -> form
+                .loginPage("/admin/login")
+                .loginProcessingUrl("/admin/login")
+                .defaultSuccessUrl("/admin/dashboard")
+                .usernameParameter("email")
+                .passwordParameter("password")
+                .failureUrl("/admin/login?error")
+                .permitAll()
+            )
+            .logout((logout) -> logout
+                .logoutRequestMatcher(new AntPathRequestMatcher("/admin/logout")) // Optional: specific admin logout
+                .logoutSuccessUrl("/admin/login?logout")
+                .permitAll()
+                .deleteCookies("JSESSIONID")
+            )
+            .authenticationProvider(adminAuthProvider());
         return http.build();
     }
 }
