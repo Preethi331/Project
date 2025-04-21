@@ -30,8 +30,8 @@ public class AdminController {
         }
         restaurantAdminService.registerAdmin(admin);
         model.addAttribute("success", "Restaurant registration successful! You can now log in.");
-        return "admin/register";
-    }
+        return "admin/login";
+    } 
 
     @GetMapping("/admin/login")
     public String showAdminLoginForm() {
