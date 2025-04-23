@@ -60,7 +60,7 @@ public class CustomerController {
 	    	return "customer/restaurants";
 	    }
 	    
-	    @GetMapping("/customer/restaurants/{email}/view")
+	    @GetMapping("/customer/dashboard/Restaurants/{email}/view")
 	    public String DisplayItemsInRestaurant(@PathVariable("email") String email,Model model) {
 	    	RestaurantAdmin radmin=restaurantAdminService.findAdminByEmail(email).get();
 	    	List<MenuItems> mitems=menuItemService.getMenuItemsByRestaurantId(radmin.getId());
