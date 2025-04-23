@@ -1,5 +1,6 @@
 package com.cts.OnlineFoodDeliverySystem.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import com.cts.OnlineFoodDeliverySystem.model.MenuItems;
@@ -10,4 +11,5 @@ public interface RestaurantAdminService {
 	void registerAdmin(RestaurantAdmin admin);
     Optional<RestaurantAdmin> findAdminByEmail(String email);
     void createItem(MenuItems mitems);
+    List<RestaurantAdmin> allRestaurant();
 }

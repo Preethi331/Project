@@ -1,21 +1,31 @@
 package com.cts.OnlineFoodDeliverySystem.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.cts.OnlineFoodDeliverySystem.model.Customer;
+import com.cts.OnlineFoodDeliverySystem.model.MenuItems;
+import com.cts.OnlineFoodDeliverySystem.model.RestaurantAdmin;
 import com.cts.OnlineFoodDeliverySystem.service.CustomerService;
+import com.cts.OnlineFoodDeliverySystem.service.MenuItemsService;
+import com.cts.OnlineFoodDeliverySystem.service.RestaurantAdminService;
 
 @Controller
 public class CustomerController {
 
 	 @Autowired
 	    private CustomerService customerService;
-
+	 @Autowired
+	 	private RestaurantAdminService restaurantAdminService;
+	 @Autowired
+	 	private MenuItemsService menuItemService;
 	    @GetMapping("/customer/register")
 	    public String showCustomerRegistrationForm(Model model) {
 	        model.addAttribute("customer", new Customer());
@@ -43,4 +53,17 @@ public class CustomerController {
 	        return "customer/dashboard";
 	    }
 	    
+	    @GetMapping("/customer/dashboard/Restaurants")
+	    public String DisplayRestaurants(Model model) {
+	    	List<RestaurantAdmin> restaurants=restaurantAdminService.allRestaurant();
+	    	model.addAttribute("restaurants",restaurants);
+	    	return "customer/restaurants";
+	    }
+	    
+	    @GetMapping("/customer/restaurants/{id}/view")
+	    public String DisplayItemsInRestaurant(@PathVariable("id") int id,Model model) {
+	    	List<MenuItems> mitems=menuItemService.getMenuItemsByRestaurantId(id);
+	    	model.addAttribute("items",mitems);
+	    	return "customer/displayItems";
+	    }
 }

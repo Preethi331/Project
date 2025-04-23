@@ -1,5 +1,6 @@
 package com.cts.OnlineFoodDeliverySystem.service;
 
+import java.util.List;
 import java.util.Optional;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +40,12 @@ public class RestaurantAdminServiceImpl implements RestaurantAdminService{
 		menuItemRepository.save(mitems);
 		
 	}
+
+	@Override
+	public List<RestaurantAdmin> allRestaurant() {
+		return restaurantAdminRepository.findAll();
+	}
+	
 	
 
 
