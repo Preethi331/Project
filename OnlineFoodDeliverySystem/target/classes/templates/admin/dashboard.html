@@ -29,7 +29,7 @@
             <div class="card-body">
                 <h5 class="card-title">Restaurant Management</h5>
                 <p class="card-text">Manage your menu, orders, and restaurant details here.</p>
-                <a href="#" class="btn btn-danger">Manage Menu</a>
+              <a th:href="@{/admin/dashboard/{items}/edit(items=${#authentication.principal.username})}" class="btn btn-danger">Manage Menu</a>
             </div>
         </div>
     </div>
