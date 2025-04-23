@@ -12,4 +12,5 @@ public interface RestaurantAdminService {
     Optional<RestaurantAdmin> findAdminByEmail(String email);
     void createItem(MenuItems mitems);
     List<RestaurantAdmin> allRestaurant();
+    //int idFromEmail(String email);
 }

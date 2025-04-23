@@ -60,9 +60,10 @@ public class CustomerController {
 	    	return "customer/restaurants";
 	    }
 	    
-	    @GetMapping("/customer/restaurants/{id}/view")
-	    public String DisplayItemsInRestaurant(@PathVariable("id") int id,Model model) {
-	    	List<MenuItems> mitems=menuItemService.getMenuItemsByRestaurantId(id);
+	    @GetMapping("/customer/restaurants/{email}/view")
+	    public String DisplayItemsInRestaurant(@PathVariable("email") String email,Model model) {
+	    	RestaurantAdmin radmin=restaurantAdminService.findAdminByEmail(email).get();
+	    	List<MenuItems> mitems=menuItemService.getMenuItemsByRestaurantId(radmin.getId());
 	    	model.addAttribute("items",mitems);
 	    	return "customer/displayItems";
 	    }

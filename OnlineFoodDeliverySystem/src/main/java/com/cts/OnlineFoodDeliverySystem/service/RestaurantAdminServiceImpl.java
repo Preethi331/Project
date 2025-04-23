@@ -45,6 +45,12 @@ public class RestaurantAdminServiceImpl implements RestaurantAdminService{
 	public List<RestaurantAdmin> allRestaurant() {
 		return restaurantAdminRepository.findAll();
 	}
+
+//	@Override
+//	public int idFromEmail(String email) {
+//		// TODO Auto-generated method stub
+//		return restaurantAdminRepository.;
+//	}
 	
 	
 
